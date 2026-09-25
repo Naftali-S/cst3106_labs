@@ -1,0 +1,150 @@
+/* ==== Base ====*/
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Calibri, Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.4;
+    color: #222;
+    background-color: #eeeeee;
+}
+
+.resume {
+    max-width: 850px;
+    margin: 2rem auto;
+    padding: 2.5rem 3rem;
+    background-color: white;
+    box-shadow: 0 0 10px rgb(0 0 0 / 0.15);
+}
+
+a {
+    color: #1a4d8f;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ==== Header ==== */
+header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.2rem;
+    letter-spacing: 0.05em;
+}
+
+.contact {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem 0.75rem;
+}
+/* | between contact items */
+.contact li + li::before {
+    content: "|";
+    margin-right: 0.75rem;
+    color: #999;
+}
+
+.summary {
+    text-align: left;
+    margin: 0;
+}
+
+/* ==== Sections ==== */
+h2 {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #1a4d8f;
+    border-bottom: 2px solid #1a4d8f;
+    padding-bottom: 0.2rem;
+    margin: 1.5rem 0 0.75rem;
+}
+
+.entry {
+    margin-bottom: 1rem;
+}
+
+/* Title on the left, date on the right */
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0 1rem;
+}
+
+h3 {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.role {
+    font-weight: normal;
+}
+
+.meta {
+    font-style: italic;
+    color: #555;
+}
+
+.entry p {
+    margin: 0.3rem 0;
+}
+
+.entry ul {
+    margin: 0.3rem 0 0;
+    padding-left: 1.25rem;
+}
+
+.entry li {
+    margin-bottom: 0.2rem;
+}
+
+/* ==== Skills ==== */
+.skills {
+    margin: 0;
+}
+
+.skills dt {
+    font-weight: bold;
+    float: left;
+    margin-right: 0.4rem;
+}
+
+.skills dt::after {
+    content: ":";
+}
+
+.skills dd {
+    margin: 0 0 0.3rem 0;
+}
+
+/* ==== phones ==== */
+@media screen and (max-width: 600px) {
+    .resume {
+        margin: 0;
+        padding: 1.25rem;
+        box-shadow: none;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .entry-header {
+        flex-direction: column;
+    }
+}

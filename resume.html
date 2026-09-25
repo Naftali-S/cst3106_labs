@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Resume of Naftali Segal, B.Tech Business Systems Development student"
+    />
+    <title>Naftali Segal Resume</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="resume">
+      <!-- ====Header==== -->
+      <header>
+        <h1>Naftali Segal</h1>
+        <ul class="contact">
+          <li>Ottawa, ON</li>
+          <li><a href="tel:+18194312380">819-431-2380</a></li>
+          <li>
+            <a href="mailto:naftalisegals@gmail.com">naftalisegals@gmail.com</a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/naftali-segal" target="_blank">linkedin.com/in/naftali-segal</a>
+          </li>
+        </ul>
+        <p class="summary">
+          B.Tech (Business Systems Development) student bridging business and
+          software. Hands-on with Python, Java, and SQL (MySQL/PostgreSQL);
+          built and deployed a scheduled internship scraper on GitHub Actions
+          and prototyped a full-stack iOS app on AWS.
+        </p>
+      </header>
+      <!-- ===Education=== -->
+      <section id="education">
+        <h2>Education</h2>
+
+        <article class="entry">
+          <div class="entry-header">
+            <h3>Algonquin College</h3>
+            <span class="meta">Ottawa, ON | 2025 - Expected 2029</span>
+          </div>
+          <p>
+            Bachelor of Technology (Business Systems Development) (Honours), In
+            Progress.
+            <strong>GPA: 3.58 (cumulative through Winter 2026).</strong>
+          </p>
+          <p>
+            <strong> Relevant coursework:</strong> CST3101 Database Design
+            Fundamentals (MySQL), CST3100 Intro to Programming (Java, A+),
+            CST3102 Programming, CST3103 Data Communication &amp; Networking,
+            CST3105 Advanced Database Design &amp; SQL (PL/SQL, cloud DB),
+            CST3106 Internet Architecture &amp; Web Development (JS, REST/JSON),
+            CST3107 Operating Systems, MGT4102 Business Fundamentals, MGT4701
+            Advanced Business Statistics, ESC4402 ERP Business Configuration,
+            MAT8003 Mathematics for Programming, PHI1000 Logic &amp; Critical
+            Thinking.
+          </p>
+          <p class="note">
+            <em
+              >Prior coursework at Carleton University (2023 – 2025): business
+              fundamentals, intro programming in C, intro finance, marketing,
+              intro International Business.</em
+            >
+          </p>
+        </article>
+      </section>
+      <!-- ===Projects=== -->
+      <section id="projects">
+        <h2>Projects</h2>
+
+        <article class="entry">
+          <div class="entry-header">
+            <h3>
+              Internship Scraper <span class="role">(Personal Project)</span> |
+              <a
+                href="https://github.com/Naftali-S/internship-scraper"
+                target="_blank"
+                >github.com/Naftali-S/internship-scraper</a
+              >
+            </h3>
+            <span class="meta">2026 - Present</span>
+          </div>
+          <ul>
+            <li>
+              Built a Python scraper that monitors 52 companies across 11
+              job-board platforms (Workday, Oracle Recruiting Cloud, Eightfold,
+              SmartRecruiters, Ashby, Lever, Workable) for summer internships in
+              Ottawa/Kanata/Canada-remote.
+            </li>
+            <li>
+              Reverse-engineered each platform's JSON API from browser dev
+              tools; no headless browser and no HTML parsing, so the scraper is
+              faster and more resilient than DOM-scraping approaches.
+            </li>
+            <li>
+              Diffs each run against a committed SQLite database so state
+              travels with the repo across GitHub Actions runs; emails only new
+              postings via Gmail. Runs daily on GitHub Actions.
+            </li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="entry-header">
+            <h3>
+              Financial Literacy &amp; Payment App
+              <span class="role">(Academic Project, with partner)</span>
+            </h3>
+            <span class="meta">Feb 2024 - Sep 2024</span>
+          </div>
+          <ul>
+            <li>
+              Modeled a relational data schema (PostgreSQL on AWS RDS) and wrote
+              SQL (joins, aggregates, subqueries) for planned app workflows:
+              login, recommendations, and education modules.
+            </li>
+            <li>
+              Prototyped a SwiftUI iOS client backed by REST endpoints served
+              from AWS Lambda; validated end-to-end data flow from database to
+              API to UI.
+            </li>
+            <li>
+              Documented the architecture and iterated on requirements with a
+              partner; project was paused before ship.
+            </li>
+          </ul>
+        </article>
+      </section>
+      <section id="experience">
+        <h2>Experience</h2>
+        <article class="entry">
+          <div class="entry-header">
+            <h3>Shift Supervisor <span class="role">| Subway</span></h3>
+            <span class="meta">Ottawa, ON | Jul 2021 - Present</span>
+          </div>
+          <ul>
+            <li>
+              Run the store as the on-shift authority on evening and closing
+              shifts; responsible for the staff member on duty, service quality,
+              and end-of-day operations.
+            </li>
+            <li>
+              Daily cash control: cashouts, deposits, paperwork, and
+              reconciliation of all totals.
+            </li>
+            <li>
+              Trained 20+ staff over 5+ years across health, safety, and
+              operational procedures.
+            </li>
+            <li>
+              De-escalate customer disputes and difficult situations calmly,
+              keeping the store safe and orderly during peak periods.
+            </li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="entry-header">
+            <h3>
+              Guest Services Attendant
+              <span class="role">| Carleton University Athletics</span>
+            </h3>
+            <span class="meta">Ottawa, ON | Jul 2024 – Apr 2026</span>
+          </div>
+          <ul>
+            <li>
+              Support varsity events (200–1,000 attendees): setup/teardown,
+              ticket scanning and sales, and front-line issue resolution.
+            </li>
+            <li>
+              Collaborate with staff to keep entry flow smooth and safe during
+              peak traffic.
+            </li>
+          </ul>
+        </article>
+      </section>
+      <!-- ===Skills=== -->
+      <section id="skills">
+        <h2>Technical Skills</h2>
+        <dl class="skills">
+          <dt>Languages</dt>
+          <dd>Python, Java, C, SQL (MySQL, PostgreSQL).</dd>
+
+          <dt>Tools &amp; Cloud</dt>
+          <dd>
+            Git / GitHub, GitHub Actions, SQLite; AWS (EC2, RDS, Lambda) from
+            project work.
+          </dd>
+
+          <dt>Business &amp; Analysis</dt>
+          <dd>
+            Requirements-to-solution thinking, process documentation, ERP
+            business configuration (coursework), reporting and data
+            consolidation with SQL.
+          </dd>
+        </dl>
+      </section>
+      <!-- ===Languages=== -->
+      <section id="languages">
+        <h2>Languages</h2>
+        <p>English (native); French (conversational).</p>
+      </section>
+    </main>
+  </body>
+</html>
