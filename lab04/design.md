@@ -11,7 +11,7 @@ This document describes the design system for my portfolio website: the colours,
 All colours are defined once as CSS custom properties (design tokens) in `:root` and used everywhere through `var()`.
 
 | Token | Hex | Role |
-|---|---|---|
+| --- | --- | --- |
 | `--color-primary` | `#1a4d8f` | Navy. Name, headings, links and the primary button. Carried over from my resume so both share one brand. |
 | `--color-accent` | `#0f766e` | Teal. Used sparingly: the eyebrow line, the active nav underline and the tech tags. |
 | `--color-accent-light` | `#f0fdfa` | Pale teal. Tag background. |
@@ -42,6 +42,7 @@ All colours are defined once as CSS custom properties (design tokens) in `:root`
 ## 3. Components
 
 ### Header and Navigation
+
 - **Design:** Light slate background, with my name on the left and the navigation links on the right. The current page and hovered links turn navy with a teal underline.
 - **Why the tinted header:** a white header right above the white hero section had no visual break. The slate tint separates the navigation from the content.
 - **Phones:** the name and links stack and are centred.
@@ -49,11 +50,13 @@ All colours are defined once as CSS custom properties (design tokens) in `:root`
 ![Header Mock-up](header.png)
 
 ### Hero
+
 - **Design:** A spacious white section with a small teal line (program and school), my name as the biggest heading, a one-sentence tagline in grey, and two buttons.
 
 ![Hero Mock-up](hero.png)
 
 ### Buttons
+
 - **Design:** Rounded buttons with a navy border, in two styles:
   - **Primary:** filled navy with white text, for the main action.
   - **Secondary:** outlined in navy, for the secondary action.
@@ -62,6 +65,7 @@ All colours are defined once as CSS custom properties (design tokens) in `:root`
 ![Buttons Mock-up](buttons.png)
 
 ### Project Card (reusable component)
+
 - **Design:** White card with a light border and rounded corners. Each card has:
   1. **Image (optional):** a screenshot or logo, always cropped to the same rectangular shape so every card matches.
   2. **Title**
@@ -72,6 +76,7 @@ All colours are defined once as CSS custom properties (design tokens) in `:root`
 ![Project Card Mock-up](card.png)
 
 ### Footer
+
 - **Design:** Dark navy background with light text. Copyright on the left, GitHub / LinkedIn / Email links on the right. The dark footer gives every page a clear ending.
 - **Phones:** stacks and is centred.
 
