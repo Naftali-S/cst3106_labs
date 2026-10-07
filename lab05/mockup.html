@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yatzy - Mock-up</title>
+
+    <!-- === Fronts === -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@1,500&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="mockup.css" />
+  </head>
+  <body>
+    <h1>YATZY</h1>
+    <p class="status">Dice design: all six faces</p>
+
+    <!-- === Dice showcase === 
+     Each die is a 3x3 grid; the pip classes (tl, c, br...) 
+     choose which cells get a dot. -->
+    <div class="dice-row">
+      <!-- 1 -->
+      <div class="die"><span class="pip c"></span></div>
+      <!-- 2 -->
+      <div class="die"><span class="pip tr"></span><span class="pip bl"></span></div>
+      <!-- 3 -->
+      <div class="die"><span class="pip tr"></span><span class="pip c"></span></div>
+      <!-- 4 -->
+      <div class="die"><span class="pip tl"></span><span class="pip tr"></span></div>
+      <!-- 5 -->
+      <div class="die"><span class="pip tl"></span><span class="pip tr"></span></div>
+      <!-- 6 -->
+      <div class="die"><span class="pip tl"></span><span class="pip tr"></span></div>
+    </div>
+
+    <!-- === Held vs. Normal === 
+     Adding the "held" class lifts the die and adds the brass + oxblood ring. -->
+     <div class="dice-row">
+        <div class="die held"><span class="pip tl"></span><span class="pip tr"></span><span class="pip c"></span><span class="pip bl"></span><span class="pip br"></span></div>
+        <div class="die"><span class="pip tl"></span><span class="pip tr"></span><span class="pip c"></span><span class="pip bl"></span><span class="pip br"></span></div>
+     </div>
+     <p class="caption">Left: held &nbsp;&middot;&nbsp; Right: normal</p>
+
+  </body>
+</html>
