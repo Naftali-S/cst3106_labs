@@ -15,11 +15,12 @@
     --color-rule: #BFAE8A;
 
     /* Fonts: */
-    --font-heading: "Cinzel", Georgia, serif;
-    --font-sub: "Cormorant Garamond", Georgia, serif;
-    --font-body: "Inter", Arial, sans-serif;
+    --font-title: "Bodoni Moda", Georgia, serif;          /* display: YATZY + SCORECARD */
+    --font-heading: "Cinzel", Georgia, serif;             /* interface: buttons, TOTAL */
+    --font-sub: "Cormorant Garamond", Georgia, serif;     /* italic subheadings */
+    --font-body: "Cormorant Garamond", Georgia, serif;    /* body text and scores */
 
-    /* Dice Sizing*/
+    /* Dice sizing */
     --die-size: 4rem;
 }
 
@@ -31,10 +32,11 @@ body {
     background: radial-gradient(ellipse at center, #11533F 0%, var(--color-felt) 55%, var(--color-felt-dark) 100%);
     color: var(--color-parchment);
     font-family: var(--font-body);
+    font-weight: 500;      /* Cormorant is delicate; 500 keeps body text readable */
 }
 
 h1 {
-    font-family: var(--font-heading);
+    font-family: var(--font-title);
     color: var(--color-gold);
     letter-spacing: 0.25rem;
     text-align: center;
@@ -49,12 +51,14 @@ h1 {
 
 .dice-row {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 1.125rem;
     padding: 1.5rem;
 }
 
 .die {
+    flex-shrink: 0;
     width: var(--die-size);
     height: var(--die-size);
     box-sizing: border-box;
@@ -101,43 +105,249 @@ h1 {
 }
 
 /* Pip positions in the 3x3 grid (row / column) */
-.tl { /* top-left */
+.tl {
+    /* top-left */
     grid-area: 1 / 1;
 }
 
 
-.tr { /* top-right */
+.tr {
+    /* top-right */
     grid-area: 1 / 3;
 }
 
 
-.ml { /* middle-left */
+.ml {
+    /* middle-left */
     grid-area: 2 / 1;
 }
 
 
-.c { /* centre */
+.c {
+    /* centre */
     grid-area: 2 / 2;
 }
 
 
-.mr { /* middle-right */
+.mr {
+    /* middle-right */
     grid-area: 2 / 3;
 }
 
 
-.bl { /* middle-right */
+.bl {
+    /* bottom-left */
     grid-area: 3 / 1;
 }
 
 
-.br { /* bottom-right */
+.br {
+    /* bottom-right */
     grid-area: 3 / 3;
 }
 
 
 .caption {
     text-align: center;
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: var(--color-gold);
+}
+
+/* === Full Game Screen === */
+
+.section-divider {
+    border: none;
+    border-top: 1px solid var(--color-brass);
+    width: 60%;
+    margin: 3rem auto;
+    opacity: 0.6;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--color-felt-dark);
+    border-top: 2px solid var(--color-brass);
+    border-bottom: 2px solid var(--color-brass);
+}
+
+.game-header h2 {
+    margin: 0;
+    font-family: var(--font-title);
+    color: var(--color-gold);
+    letter-spacing: 0.25rem;
+}
+
+.game {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    align-items: start;
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    border: 2px solid var(--color-brass);
+    border-radius: 24px;
+    background: rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Rolls left --- */
+
+.rolls-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-sub);
+    font-style: italic;
+    font-size: 1.125rem;
+}
+
+.roll-marker {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    border: 2px solid var(--color-gold);
+}
+
+.roll-marker.available {
+    background: var(--color-gold);
+}
+
+/* --- Roll button --- */
+
+.btn-roll {
+    padding: 0.875rem 3rem;
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    letter-spacing: 0.15rem;
+    color: var(--color-felt-dark);
+    background: var(--color-gold);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 0 var(--color-brass), 0 8px 14px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.btn-roll:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--color-brass), 0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.hint {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--color-gold);
+}
+
+/* --- Scorecard --- */
+
+.scorecard {
+    padding: 1.25rem 1.5rem;
+    background: var(--color-parchment);
+    color: var(--color-ink);
+    border: 4px double var(--color-brass);
+    border-radius: 8px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+}
+
+.scorecard h3 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-title);
+    color: var(--color-felt);
+    text-align: center;
+    letter-spacing: 0.2rem;
+}
+
+.scorecard table {
+    width: 100%;
+    border-collapse: collapse;
+    /* lining = digits all the same height (Cormorant defaults to old-style)
+       tabular = digits all the same width, so the score column lines up */
+    font-variant-numeric: lining-nums tabular-nums;
+}
+
+.scorecard td {
+    padding: 0.4rem 0.5rem;
+    border-bottom: 1px solid var(--color-rule);
+    font-size: 1.05rem;    /* Cormorant runs small, so slightly larger than default */
+}
+
+.scorecard td+td {
+    text-align: right;
+    width: 4rem;
+}
+
+.scorecard .section-label td {
+    padding-top: 1rem;
+    border-bottom: 2px solid var(--color-brass);
+    font-family: var(--font-sub);
+    font-style: italic;
+    font-size: 1.125rem;
+    color: var(--color-felt);
+}
+
+.scorecard .open {
+    cursor: pointer;
+}
+
+.scorecard .open:hover {
+    background: rgba(168, 134, 43, 0.18);
+}
+
+.scorecard .preview {
+    font-style: italic;
+    color: var(--color-brass);
+}
+
+.scorecard .filled td+td {
+    font-weight: 700;
+}
+
+.scorecard .subtotal td {
+    font-weight: 700;
+    background: rgba(46, 36, 24, 0.06);
+}
+
+.scorecard .yatzy td:first-child {
+    color: var(--color-oxblood);
+    font-weight: 700;
+}
+
+.scorecard .grand-total td {
+    padding-top: 0.75rem;
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    color: var(--color-felt);
+    border-bottom: none;
+    border-top: 2px solid var(--color-brass);
+}
+
+/* --- Small Screens --- */
+@media screen and (max-width: 900px) {
+    .game {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 1rem;
+    }
+
+    .table {
+        padding: 1.25rem 0.5rem;
+    }
+
+    .game-header {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
 }

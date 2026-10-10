@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yatzy - Mock-up</title>
 
-    <!-- === Fronts === -->
+    <!-- === Fonts === -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@1,500&family=Inter:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..900&family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="mockup.css" />
@@ -67,5 +67,78 @@
       </div>
     </div>
     <p class="caption">Left: held &nbsp;&middot;&nbsp; Right: normal</p>
+
+    <hr class="section-divider" />
+    <!-- === Full Game Mock-up === -->
+
+    <header class="game-header">
+      <h2>YATZY</h2>
+      <p class="status">Round 4 of 15</p>
+    </header>
+    
+    <main class="game">
+      <!-- === Left: the table (dice + controls) === -->
+      <section class="table">
+        <!-- Five dice. "held" = kept for the next roll -->
+        <div class="dice-row">
+          <div class="die held">
+            <span class="pip tl"></span><span class="pip tr"></span><span class="pip c"></span><span class="pip bl"></span><span class="pip br"></span>
+          </div>
+          <div class="die held">
+            <span class="pip tl"></span><span class="pip tr"></span><span class="pip c"></span><span class="pip bl"></span><span class="pip br"></span>
+          </div>
+          <div class="die held">
+            <span class="pip tl"></span><span class="pip tr"></span><span class="pip c"></span><span class="pip bl"></span><span class="pip br"></span>
+          </div>
+          <div class="die">
+            <span class="pip tr"></span><span class="pip bl"></span>
+          </div>
+          <div class="die">
+            <span class="pip tl"></span><span class="pip tr"></span><span class="pip ml"></span><span class="pip mr"></span><span class="pip bl"></span><span class="pip br"></span>
+          </div>
+        </div>
+
+        <div class="rolls-left">
+          <span>Rolls left</span>
+          <span class="roll-marker"></span>
+          <span class="roll-marker"></span>
+          <span class="roll-marker available"></span>
+        </div>
+
+        <button class="btn-roll">ROLL DICE</button>
+        <p class="hint">Click a die to hold it &nbsp;&middot;&nbsp; Click a box to score</p>
+      </section>
+
+      <aside class="scorecard">
+        <h3>SCORECARD</h3>
+        <table>
+          <!-- Upper Section -->
+          <tr class="section-label"><td colspan="2">Upper Section</td></tr>
+          <tr class="filled"><td>Ones</td><td>3</td></tr>
+          <tr class="open"><td>Twos</td><td class="preview">2</td></tr>
+          <tr class="filled"><td>Threes</td><td>9</td></tr>
+          <tr class="open"><td>Fours</td><td class="preview">0</td></tr>
+          <tr class="open"><td>Fives</td><td class="preview">15</td></tr>
+          <tr class="open"><td>Sixes</td><td class="preview">6</td></tr>
+          <tr class="subtotal"><td>Upper Total</td><td>12</td></tr>
+          <tr class="subtotal"><td>Bonus <small>(63+)</small></td><td>0</td></tr>
+          <!-- Lower Section -->
+          <tr class="section-label"><td colspan="2">Lower Section</td></tr>
+          <tr class="open"><td>One Pair</td><td class="preview">10</td></tr>
+          <tr class="open"><td>Two Pairs</td><td class="preview">0</td></tr>
+          <tr class="open"><td>Three of a Kind</td><td class="preview">15</td></tr>
+          <tr class="open"><td>Four of a Kind</td><td class="preview">0</td></tr>
+          <tr class="open"><td>Small Straight</td><td class="preview">0</td></tr>
+          <tr class="open"><td>Large Straight</td><td class="preview">0</td></tr>
+          <tr class="open"><td>Full House</td><td class="preview">0</td></tr>
+          <tr class="filled"><td>Chance</td><td>22</td></tr>
+          <tr class="open yatzy"><td>Yatzy</td><td class="preview">0</td></tr>
+          <tr class="subtotal"><td>Lower Total</td><td>22</td></tr>
+
+          <!-- Grand total -->
+          <tr class="grand-total"><td>TOTAL</td><td>34</td></tr>
+        </table>
+      </aside>
+    </main>
   </body>
 </html>
