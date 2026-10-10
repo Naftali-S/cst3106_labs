@@ -4,11 +4,12 @@
     --color-felt: #0B3D2E;
     --color-felt-dark: #06261C;
     --color-ivory: #FAF7F0;
-    --color-pip: #1c1c1c;
+    --color-pip: #1C1C1C;
 
     /* Secondary: */
-    --color-gold: #c9a227;
+    --color-gold: #C9A227;
     --color-brass: #A8862B;
+    --color-brass-dark: #735614;   /* darker brass for text on parchment (4.89:1, passes WCAG AA) */
     --color-oxblood: #6B1E2E;
     --color-parchment: #E6D9BC;
     --color-ink: #2E2418;
@@ -309,7 +310,7 @@ h1 {
 
 .scorecard .preview {
     font-style: italic;
-    color: var(--color-brass);
+    color: var(--color-brass-dark);
 }
 
 .scorecard .filled td+td {
@@ -333,6 +334,20 @@ h1 {
     color: var(--color-felt);
     border-bottom: none;
     border-top: 2px solid var(--color-brass);
+}
+
+/* --- Keyboard focus ---
+   Visible ring when a die, score box or the Roll button is reached
+   with the keyboard (Tab). :focus-visible skips mouse clicks. */
+.die:focus-visible,
+.btn-roll:focus-visible {
+    outline: 3px solid var(--color-gold);
+    outline-offset: 4px;
+}
+
+.scorecard .open:focus-visible {
+    outline: 3px solid var(--color-brass-dark);
+    outline-offset: -3px;   /* inset so it stays inside the scorecard */
 }
 
 /* --- Small Screens --- */

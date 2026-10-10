@@ -71,6 +71,7 @@ All colours are defined once as CSS custom properties (design tokens) in `:root`
 | `--color-parchment` | `#E6D9BC` | Aged parchment. Scorecard background. |
 | `--color-ink` | `#2E2418` | Sepia ink. Scorecard text. |
 | `--color-rule` | `#BFAE8A` | Faded tan. Lines between scorecard rows. |
+| `--color-brass-dark` | `#735614` | Dark brass. Preview scores on the scorecard (4.89:1 contrast on parchment). |
 
 #### Why These Colours
 
@@ -81,7 +82,7 @@ All colours are defined once as CSS custom properties (design tokens) in `:root`
 
 ### Typography
 
-Three fonts, each with one job. All are free on Google Fonts.
+Three fonts across four roles. All are free on Google Fonts.
 
 | Use | Font | Fallback | Style |
 | --- | --- | --- | --- |
@@ -172,3 +173,8 @@ The mock-up shows round 4: the player has rolled twice, is holding three 5s, and
 - **State classes:** `held`, `open`, `filled`, `preview` and `available` are plain CSS classes. The JavaScript phase adds and removes these classes to change how elements look.
 - **Units:** sizes and spacing use `rem`; borders, radius and shadows use `px`.
 - **Responsive:** a single media query at 900px switches the layout to one column.
+
+### Accessibility
+- **Keyboard focus:** dice, open score boxes and the Roll button show a `:focus-visible` outline (gold on the felt, dark brass on the scorecard). The game dice and open score boxes have `tabindex="0"` so they can be reached with Tab.
+- **Screen readers:** each die has an `aria-label` with its value and held state, e.g. `aria-label="Die showing 5, held"`. In the JavaScript phase the label is updated after every roll and hold, and dice become `<button>` elements so Enter/Space work.
+- **Preview contrast:** preview scores use `--color-brass-dark` (4.89:1 on parchment) instead of `--color-brass` (2.46:1), which meets WCAG AA.

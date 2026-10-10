@@ -79,21 +79,23 @@
     <main class="game">
       <!-- === Left: the table (dice + controls) === -->
       <section class="table">
-        <!-- Five dice. "held" = kept for the next roll -->
+        <!-- Five dice. "held" = kept for the next roll.
+             tabindex="0" makes each die reachable with Tab;
+             aria-label tells screen readers the value and held state. -->
         <div class="dice-row">
-          <div class="die held">
+          <div class="die held" tabindex="0" aria-label="Die showing 5, held">
             <span class="pip tl"></span><span class="pip tr"></span><span class="pip c"></span><span class="pip bl"></span><span class="pip br"></span>
           </div>
-          <div class="die held">
+          <div class="die held" tabindex="0" aria-label="Die showing 5, held">
             <span class="pip tl"></span><span class="pip tr"></span><span class="pip c"></span><span class="pip bl"></span><span class="pip br"></span>
           </div>
-          <div class="die held">
+          <div class="die held" tabindex="0" aria-label="Die showing 5, held">
             <span class="pip tl"></span><span class="pip tr"></span><span class="pip c"></span><span class="pip bl"></span><span class="pip br"></span>
           </div>
-          <div class="die">
+          <div class="die" tabindex="0" aria-label="Die showing 2">
             <span class="pip tr"></span><span class="pip bl"></span>
           </div>
-          <div class="die">
+          <div class="die" tabindex="0" aria-label="Die showing 6">
             <span class="pip tl"></span><span class="pip tr"></span><span class="pip ml"></span><span class="pip mr"></span><span class="pip bl"></span><span class="pip br"></span>
           </div>
         </div>
@@ -115,24 +117,24 @@
           <!-- Upper Section -->
           <tr class="section-label"><td colspan="2">Upper Section</td></tr>
           <tr class="filled"><td>Ones</td><td>3</td></tr>
-          <tr class="open"><td>Twos</td><td class="preview">2</td></tr>
+          <tr class="open" tabindex="0"><td>Twos</td><td class="preview">2</td></tr>
           <tr class="filled"><td>Threes</td><td>9</td></tr>
-          <tr class="open"><td>Fours</td><td class="preview">0</td></tr>
-          <tr class="open"><td>Fives</td><td class="preview">15</td></tr>
-          <tr class="open"><td>Sixes</td><td class="preview">6</td></tr>
+          <tr class="open" tabindex="0"><td>Fours</td><td class="preview">0</td></tr>
+          <tr class="open" tabindex="0"><td>Fives</td><td class="preview">15</td></tr>
+          <tr class="open" tabindex="0"><td>Sixes</td><td class="preview">6</td></tr>
           <tr class="subtotal"><td>Upper Total</td><td>12</td></tr>
           <tr class="subtotal"><td>Bonus <small>(63+)</small></td><td>0</td></tr>
           <!-- Lower Section -->
           <tr class="section-label"><td colspan="2">Lower Section</td></tr>
-          <tr class="open"><td>One Pair</td><td class="preview">10</td></tr>
-          <tr class="open"><td>Two Pairs</td><td class="preview">0</td></tr>
-          <tr class="open"><td>Three of a Kind</td><td class="preview">15</td></tr>
-          <tr class="open"><td>Four of a Kind</td><td class="preview">0</td></tr>
-          <tr class="open"><td>Small Straight</td><td class="preview">0</td></tr>
-          <tr class="open"><td>Large Straight</td><td class="preview">0</td></tr>
-          <tr class="open"><td>Full House</td><td class="preview">0</td></tr>
+          <tr class="open" tabindex="0"><td>One Pair</td><td class="preview">10</td></tr>
+          <tr class="open" tabindex="0"><td>Two Pairs</td><td class="preview">0</td></tr>
+          <tr class="open" tabindex="0"><td>Three of a Kind</td><td class="preview">15</td></tr>
+          <tr class="open" tabindex="0"><td>Four of a Kind</td><td class="preview">0</td></tr>
+          <tr class="open" tabindex="0"><td>Small Straight</td><td class="preview">0</td></tr>
+          <tr class="open" tabindex="0"><td>Large Straight</td><td class="preview">0</td></tr>
+          <tr class="open" tabindex="0"><td>Full House</td><td class="preview">0</td></tr>
           <tr class="filled"><td>Chance</td><td>22</td></tr>
-          <tr class="open yatzy"><td>Yatzy</td><td class="preview">0</td></tr>
+          <tr class="open yatzy" tabindex="0"><td>Yatzy</td><td class="preview">0</td></tr>
           <tr class="subtotal"><td>Lower Total</td><td>22</td></tr>
 
           <!-- Grand total -->
