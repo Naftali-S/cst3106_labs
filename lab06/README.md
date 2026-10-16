@@ -49,3 +49,22 @@ This lab builds the JavaScript structure for the Yatzy game design in the Lab 5.
 ### Game flow
 
 1. `startNewGame()` resets the scorecard, round counter and players.
+2. The player rolls the dice (up to 3 times), holding any dice between rolls.
+3. The player picks an open category. The engine checks the selection and calculates the score.
+4. `endTurn()` records the score, resets the dice and moves to the next player (and the next round after the last player).
+5. After 15 rounds, `endGame()` adds the upper bonus, totals the scores and determines the winner.
+
+### Why modularize
+
+Each module has one job and doesn't know about the page:
+
+| Module | Responsibility | Depends on |
+| --- | --- | --- |
+| `Dice` (`dice.js`) | Rolling, dice values, held state | nothing |
+| `YatzyEngine` (`yatzy_engine.js`) | Rules, score calculation, score table | nothing |
+| `YatzyGame` (`yatzy_game.js`) | Game state: players, rounds, turns, totals | `Dice`, `YatzyEngine` |
+
+- **Easier to test:** `calculateScore('fullHouse', [3,3,3,5,5])` can be checked in the console without clicking through a game.
+- **Easier to change:** switching from Yatzy to Yahtzee rules only touches `YatzyEngine`.
+- **Easier to read:** each file is short, and its `import` lines show exactly what it relies on.
+- **Separation from the UI:** none of the modules touch the DOM, so the same logic can be run behind any interface in Assignment 1.
