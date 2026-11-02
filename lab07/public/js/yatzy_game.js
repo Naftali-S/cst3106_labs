@@ -48,15 +48,18 @@ export class YatzyGame {
 
   /**
    * Rolls every die that isn't held (up to 3 rolls per turn).
-   * @returns {number[]} the dice values after the roll
+   * The roll only counts once the server has sent the dice values.
+   * Failed requests don't use up one fo the player's rolls.
+   * @returns {Promise<number[]>} the dice values after the roll
    */
-  roll() {
+  async roll() {
     this.#checkInProgress();
     if (this.#rollsUsed >= MAX_ROLLS) {
       throw new Error(`No rolls left this turn (maximum ${MAX_ROLLS})`);
     }
+    const values = await this.#dice.rollAll();
     this.#rollsUsed++;
-    return this.#dice.rollAll();
+    return values;
   }
 
   /**
