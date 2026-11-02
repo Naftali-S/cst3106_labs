@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yatzy</title>
+
+    <!-- === Fonts === -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..900&family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- type="module" lets main.js import the Dice, YatzyEngine and YatzyGame-->
+     <script type="module" src="js/main.js"></script>
+  </head>
+  <body>
+    <header class="game-header">
+      <h1>YATZY</h1>
+      <p class="status" id="round-status">Round 1 of 15</p>
+    </header>
+
+    <main class="game">
+      <!-- === Left: the table (dice + controls) === -->
+      <section class="table" aria-label="Dice table">
+        <p class="message" id="message" aria-live="polite">
+          Roll the dice to start your turn.
+        </p>
+
+        <!-- Five dice. Each one is a button so it can be clicked or used with the keyboard
+             to keep (hold) it. data-index tells main.js which die was clicked. -->
+        <div class="dice-row" id="dice">
+          <button
+            class="die"
+            data-index="0"
+            aria-label="Die 1, not rolled"
+            disabled
+          ></button>
+          <button
+            class="die"
+            data-index="1"
+            aria-label="Die 2, not rolled"
+            disabled
+          ></button>
+          <button
+            class="die"
+            data-index="2"
+            aria-label="Die 3, not rolled"
+            disabled
+          ></button>
+          <button
+            class="die"
+            data-index="3"
+            aria-label="Die 4, not rolled"
+            disabled
+          ></button>
+          <button
+            class="die"
+            data-index="4"
+            aria-label="Die 5, not rolled"
+            disabled
+          ></button>
+        </div>
+
+        <!-- Gold markers: filled = roll still available, hollow = used -->
+        <div class="rolls-left" id="rolls-left" aria-label="3 rolls left">
+          <span>Rolls left</span>
+          <span class="roll-marker available"></span>
+          <span class="roll-marker available"></span>
+          <span class="roll-marker available"></span>
+        </div>
+        <!-- Main controls -->
+        <div class="controls">
+          <button class="btn-roll" id="roll-btn">ROLL DICE</button>
+          <button class="btn-end-turn" id="end-turn-btn" disabled>
+            END TURN
+          </button>
+        </div>
+
+        <p class="hint">
+          Click a die to keep it &nbsp;&middot;&nbsp; Choose a box, then End
+          Turn
+        </p>
+
+        <button class="btn-end-game" id="end-game-btn">End game</button>
+      </section>
+
+      <!-- === Right: the scorecard === -->
+      <!-- Each scoring row has data-category. main.js adds the classes open / selected / filled and fills in the scores. -->
+
+      <aside class="scorecard" aria-label="Scorecard">
+        <h2>SCORECARD</h2>
+        <table>
+          <!-- Upper Section -->
+          <tr class="section-label">
+            <td colspan="2">Upper Section</td>
+          </tr>
+          <tr data-category="ones">
+            <td>Ones</td>
+            <td class="score"></td>
+          </tr>
+          <tr data-category="twos">
+            <td>Twos</td>
+            <td class="score"></td>
+          </tr>
+          <tr data-category="threes">
+            <td>Threes</td>
+            <td class="score"></td>
+          </tr>
+          <tr data-category="fours">
+            <td>Fours</td>
+            <td class="score"></td>
+          </tr>
+          <tr data-category="fives">
+            <td>Fives</td>
+            <td class="score"></td>
+          </tr>
+          <tr data-category="sixes">
+            <td>Sixes</td>
+            <td class="score"></td>
+          </tr>
+          <tr class="subtotal">
+            <td>Upper Total</td>
+            <td id="upper-total">0</td>
+          </tr>
+          <tr class="subtotal">
+            <td>Bonus <small>(63+)</small></td>
+            <td id="bonus">0</td>
+          </tr>
+
+          <!-- Lower Section -->
+          <tr class="section-label">
+            <td colspan="2">Lower Section</td>
+          </tr>
+          <tr data-category="onePair">
+            <td>One Pair</td>
+            <td class="score"></td>
+          </tr>
+          <tr data-category="twoPairs">
+            <td>Two Pairs</td>
+            <td class="score"></td>
+          </tr>
+          <tr data-category="threeOfAKind">
+            <td>Three of a Kind</td>
+            <td class="score"></td>
+          </tr>
+          <tr data-category="fourOfAKind">
+            <td>Four of a Kind</td>
+            <td class="score"></td>
+          </tr>
+          <tr data-category="smallStraight">
+            <td>Small Straight <small>(1-5)</small></td>
+            <td class="score"></td>
+          </tr>
+          <tr data-category="largeStraight">
+            <td>Large Straight <small>(2-6)</small></td>
+            <td class="score"></td>
+          </tr>
+          <tr data-category="fullHouse">
+            <td>Full House</td>
+            <td class="score"></td>
+          </tr>
+          <tr data-category="chance">
+            <td>Chance</td>
+            <td class="score"></td>
+          </tr>
+          <tr data-category="yatzy" class="yatzy">
+            <td>Yatzy</td>
+            <td class="score"></td>
+          </tr>
+          <tr class="subtotal">
+            <td>Lower Total</td>
+            <td id="lower-total">0</td>
+          </tr>
+
+          <!-- Grand total -->
+          <tr class="grand-total">
+            <td>TOTAL</td>
+            <td id="grand-total">0</td>
+          </tr>
+        </table>
+      </aside>
+    </main>
+
+    <!-- === End of Game === -->
+    <!-- <dialog> is a built-in pop-up. main.js opens it and fills in the final score and message. -->
+    <dialog class="game-over" id="game-over">
+      <h2>GAME OVER</h2>
+      <p class="final-score" id="final-score">0</p>
+      <p class="final-message" id="final-message"></p>
+      <button class="btn-roll" id="new-game-btn">PLAY AGAIN</button>
+    </dialog>
+  </body>
+</html>
