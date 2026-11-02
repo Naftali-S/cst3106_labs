@@ -49,7 +49,7 @@ export class YatzyGame {
   /**
    * Rolls every die that isn't held (up to 3 rolls per turn).
    * The roll only counts once the server has sent the dice values.
-   * Failed requests don't use up one fo the player's rolls.
+   * Failed requests don't use up one of the player's rolls.
    * @returns {Promise<number[]>} the dice values after the roll
    */
   async roll() {

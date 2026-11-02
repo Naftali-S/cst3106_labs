@@ -39,6 +39,7 @@ const PIP_LAYOUTS = {
 // --- Game State ---
 const game = new YatzyGame();
 let selectedCategory = null;
+let isRolling = false; // true while waiting for the server to send the dice
 
 // --- Drawing the page ---
 
@@ -124,8 +125,8 @@ function renderRollsLeft() {
  * Turns the buttons on or off and updates the round number.
  */
 function renderControls() {
-  rollButton.disabled = game.rollsLeft === 0 || game.isOver;
-  endTurnButton.disabled = selectedCategory === null || game.isOver;
+  rollButton.disabled = isRolling || game.rollsLeft === 0 || game.isOver;
+  endTurnButton.disabled = isRolling || selectedCategory === null || game.isOver;
   roundStatus.textContent = `Round ${game.currentRound} of ${CATEGORIES.length}`;
 
   // Once the game is over, the End Game link starts a new game instead
@@ -256,21 +257,36 @@ function countOpenBoxes() {
 // --- Event handlers ---
 
 /**
- * Roll Dice: rolls every die that isn't kept.
+ * Roll Dice: asks the server to roll every die that isn't kept.
+ * The buttons are locked until the server answers. If the request fails,
+ * the dice and rolls left stay the same and the error is shown.
  */
-function handleRoll() {
+async function handleRoll() {
+  if (isRolling) {
+    return; // a roll is already waiting on the server
+  }
+
   // The dice that aren't held are those that get rolled
   const rolledIndexes = [];
   game.heldDice.forEach((isHeld, i) => {
     if (!isHeld) rolledIndexes.push(i);
   });
 
+  isRolling = true;
+  renderControls();
+  showMessage("Rolling...");
+
   try {
-    game.roll();
+    await game.roll();
   } catch (error) {
+    console.error("Roll failed:", error);
+    isRolling = false;
+    render(); // nothing changed, so just unlock the buttons
     showMessage(error.message);
     return;
   }
+
+  isRolling = false;
   selectedCategory = null; // Dice change so player chooses again
   render(rolledIndexes);
   showMessage(rollMessage());
@@ -296,6 +312,9 @@ function rollMessage() {
  * @param {MouseEvent} event
  */
 function handleDieClick(event) {
+  if (isRolling) {
+    return; // don't change which dice are kept in the middle of a roll
+  }
   const index = Number(event.currentTarget.dataset.index);
   try {
     game.toggleHold(index);
@@ -313,7 +332,7 @@ function handleDieClick(event) {
  */
 function handleScoreClick(event) {
   const row = event.currentTarget;
-  if (!row.classList.contains("open")) {
+  if (isRolling || !row.classList.contains("open")) {
     return; // already scored, or no roll yet
   }
 
@@ -379,6 +398,9 @@ function handleEndTurn() {
  * Once the game is over the same link starts a new game.
  */
 function handleEndGame() {
+  if (isRolling) {
+    return;
+  }
   if (game.isOver) {
     handleNewGame();
     return;
