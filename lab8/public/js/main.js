@@ -2,6 +2,8 @@
  * main.js
  * Connects the YatzyGame class to the page. It reads the game state,
  * updates the HTML and handles the player's clicks.
+ * Lab 8: the roll animation is done with jQuery and the new dice values
+ * are only shown once the animation finishes.
  */
 
 import { YatzyGame } from "./yatzy_game.js";
@@ -36,6 +38,12 @@ const PIP_LAYOUTS = {
   6: ["tl", "tr", "ml", "mr", "bl", "br"],
 };
 
+// --- Roll animation settings ---
+const ROLL_DURATION_MS = 700; // how long the roll lasts
+const FACE_CHANGE_MS = 140; // how often the faces flash while rolling
+const WOBBLE_DEGREES = 15; // how far the dice rock side to side at the start
+const HOP_PX = 10; // how high the dice hop
+
 // --- Game State ---
 const game = new YatzyGame();
 let selectedCategory = null;
@@ -45,10 +53,9 @@ let isRolling = false; // true while waiting for the server to send the dice
 
 /**
  * Updates everything on the page from the game state.
- * @param {number[]} rolledIndexes - dice that were just rolled
  */
-function render(rolledIndexes = []) {
-  renderDice(rolledIndexes);
+function render() {
+  renderDice();
   renderRollsLeft();
   renderControls();
   renderScorecard();
@@ -56,9 +63,8 @@ function render(rolledIndexes = []) {
 
 /**
  * Draws the five dice: pips, held state and screen reader label.
- * @param {number[]} rolledIndexes - dice that were just rolled
  */
-function renderDice(rolledIndexes = []) {
+function renderDice() {
   const values = game.diceValues;
   const held = game.heldDice;
 
@@ -87,10 +93,6 @@ function renderDice(rolledIndexes = []) {
 
     // pressed tells screen readers this is an on/off (kept/not kept) button
     button.setAttribute("aria-pressed", held[i]);
-
-    if (rolledIndexes.includes(i)) {
-      button.classList.add("rolling"); // removed again when the animation ends
-    }
   });
 }
 
@@ -126,7 +128,8 @@ function renderRollsLeft() {
  */
 function renderControls() {
   rollButton.disabled = isRolling || game.rollsLeft === 0 || game.isOver;
-  endTurnButton.disabled = isRolling || selectedCategory === null || game.isOver;
+  endTurnButton.disabled =
+    isRolling || selectedCategory === null || game.isOver;
   roundStatus.textContent = `Round ${game.currentRound} of ${CATEGORIES.length}`;
 
   // Once the game is over, the End Game link starts a new game instead
@@ -251,15 +254,68 @@ function finalMessage(total) {
  * @returns {number}
  */
 function countOpenBoxes() {
-  return Object.values(game.scoreTable).filter((score) => score === null).length;
+  return Object.values(game.scoreTable).filter((score) => score === null)
+    .length;
+}
+
+/**
+ * Random face for the spin animation only.
+ * The real roll is still done by the server.
+ * @returns {number} 1 to 6
+ */
+function randomFace() {
+  return Math.floor(Math.random() * 6) + 1;
+}
+
+/**
+ * Rolls the given dice with jQuery: a small hop plus a side-to-side
+ * wobble that settles down, while flashing random faces on them.
+ * @param {jQuery} $dice - the dice to roll (the ones not kept)
+ * @returns {Promise} resolves when the roll animation has finished
+ */
+function spinDice($dice) {
+  // Flash a random face on every rolling die
+  const shuffleTimer = setInterval(function () {
+    $dice.each(function () {
+      const pips = PIP_LAYOUTS[randomFace()].map(createPip);
+      $(this).empty().append(pips);
+    });
+  }, FACE_CHANGE_MS);
+
+  // jQuery animates progress from 0 to 1, and step() turns it into
+  // a small hop plus a side-to-side wobble that settles down
+  return $({ progress: 0 })
+    .animate(
+      { progress: 1 },
+      {
+        duration: ROLL_DURATION_MS,
+        easing: "linear", // the settling is done by the math below
+        step: function (now) {
+          // Rocks back and forth, getting smaller as now goes from 0 to 1
+          const angle = Math.sin(now * Math.PI * 4) * WOBBLE_DEGREES * (1 - now);
+          // One arc up and back down (negative = up on screen)
+          const lift = Math.sin(now * Math.PI) * -HOP_PX;
+
+          $dice.css("rotate", angle + "deg");
+          $dice.css("translate", "0 " + lift + "px");
+        },
+        complete: function () {
+          clearInterval(shuffleTimer);
+          $dice.css("rotate", ""); // back to straight
+          $dice.css("translate", ""); // back down
+        },
+      },
+    )
+    .promise();
 }
 
 // --- Event handlers ---
 
 /**
- * Roll Dice: asks the server to roll every die that isn't kept.
- * The buttons are locked until the server answers. If the request fails,
- * the dice and rolls left stay the same and the error is shown.
+ * Roll Dice: asks the server to roll every die that isn't kept while
+ * jQuery spins those dice. The new values are only shown once the spin
+ * has finished. If the request fails, the dice go back to what they were
+ * and the error is shown.
  */
 async function handleRoll() {
   if (isRolling) {
@@ -276,19 +332,29 @@ async function handleRoll() {
   renderControls();
   showMessage("Rolling...");
 
-  try {
-    await game.roll();
-  } catch (error) {
-    console.error("Roll failed:", error);
-    isRolling = false;
-    render(); // nothing changed, so just unlock the buttons
-    showMessage(error.message);
+  // Wrap the dice in jQuery and keep only the ones being rolled
+  const $rollingDice = $(diceButtons).filter(function (i) {
+    return rolledIndexes.includes(i);
+  });
+
+  // Start the server request and the spin at the same time
+  const serverRoll = game.roll();
+  const spin = spinDice($rollingDice);
+
+  // Wait for both. allSettled waits even if the request fails
+  const [rollResult] = await Promise.allSettled([serverRoll, spin]);
+
+  isRolling = false;
+
+  if (rollResult.status === "rejected") {
+    console.error("Roll failed:", rollResult.reason);
+    render(); // puts the old faces back and unlocks the buttons
+    showMessage(rollResult.reason.message);
     return;
   }
 
-  isRolling = false;
   selectedCategory = null; // Dice change so player chooses again
-  render(rolledIndexes);
+  render(); // reveal the real values from the server
   showMessage(rollMessage());
 }
 
@@ -406,7 +472,9 @@ function handleEndGame() {
     return;
   }
 
-  const confirmed = confirm("End the game now? Your current score will be your final score.");
+  const confirmed = confirm(
+    "End the game now? Your current score will be your final score.",
+  );
   if (!confirmed) {
     return;
   }
@@ -430,7 +498,8 @@ function handleNewGame() {
 
 // --- Event listeners ---
 
-rollButton.addEventListener("click", handleRoll);
+// Lab 8: jQuery attaches the Roll button's click listener
+$("#roll-btn").on("click", handleRoll);
 
 endTurnButton.addEventListener("click", handleEndTurn);
 endGameButton.addEventListener("click", handleEndGame);
@@ -443,10 +512,6 @@ scoreRows.forEach((row) => {
 
 diceButtons.forEach((button) => {
   button.addEventListener("click", handleDieClick);
-  // Remove the tumble class when it finishes, so it can play again next roll
-  button.addEventListener("animationend", () => {
-    button.classList.remove("rolling");
-  });
 });
 
 // Draw the starting state
